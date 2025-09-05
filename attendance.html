@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,31 +10,26 @@
         body {
             font-family: 'Inter', sans-serif;
         }
-
         .tab-active {
             border-bottom: 3px solid #4f46e5;
             color: #4f46e5;
         }
     </style>
 </head>
-
 <body class="bg-gray-50">
     <!-- Navigation -->
     <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <svg class="h-8 w-8 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <svg class="h-8 w-8 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span class="ml-2 text-xl font-semibold">Teacher Dashboard</span>
+                    <span class="ml-2 text-xl font-semibold">Teacher's Dashboard</span>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <span class="text-sm text-gray-600">Welcome, Ms. Priya Sharma</span>
-                    <button onclick="logout()"
-                        class="bg-red-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-600">
+                    <span class="text-sm text-gray-600">Welcome, Mr Xyz</span>
+                    <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-600">
                         Logout
                     </button>
                 </div>
@@ -48,21 +42,14 @@
         <!-- Tabs -->
         <div class="border-b border-gray-200 mb-8">
             <nav class="-mb-px flex space-x-8">
-                <button onclick="switchTab('profile')" id="profileTab"
-                    class="tab-active py-2 px-1 border-b-2 font-medium text-sm">
+                <button onclick="switchTab('profile')" id="profileTab" class="tab-active py-2 px-1 border-b-2 font-medium text-sm">
                     My Profile
                 </button>
-                <button onclick="switchTab('attendance')" id="attendanceTab"
-                    class="py-2 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700">
+                <button onclick="switchTab('attendance')" id="attendanceTab" class="py-2 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700">
                     Mark Attendance
                 </button>
-                <button onclick="switchTab('reports')" id="reportsTab"
-                    class="py-2 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700">
+                <button onclick="switchTab('reports')" id="reportsTab" class="py-2 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700">
                     Reports
-                </button>
-                <button onclick="switchTab('students')" id="studentsTab"
-                    class="py-2 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700">
-                    Manage Students
                 </button>
             </nav>
         </div>
@@ -75,7 +62,7 @@
                     <div class="space-y-4">
                         <div>
                             <p class="text-sm text-gray-600">Full Name</p>
-                            <p class="text-lg font-semibold">Ms. Priya Sharma</p>
+                            <p class="text-lg font-semibold">Mr. Xyz</p>
                         </div>
                         <div>
                             <p class="text-sm text-gray-600">Employee ID</p>
@@ -87,13 +74,13 @@
                         </div>
                         <div>
                             <p class="text-sm text-gray-600">Phone</p>
-                            <p class="text-lg font-semibold">+91 9876543210</p>
+                            <p class="text-lg font-semibold">+91 98765xxxx</p>
                         </div>
                     </div>
                     <div class="space-y-4">
                         <div>
                             <p class="text-sm text-gray-600">School</p>
-                            <p class="text-lg font-semibold">Government Primary School, Rajpur</p>
+                            <p class="text-lg font-semibold">Government Primary School, Jaipur</p>
                         </div>
                         <div>
                             <p class="text-sm text-gray-600">Subjects Teaching</p>
@@ -144,16 +131,13 @@
 
                 <!-- Quick Actions -->
                 <div class="mb-4 flex space-x-2">
-                    <button onclick="markAllPresent()"
-                        class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+                    <button onclick="markAllPresent()" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
                         Mark All Present
                     </button>
-                    <button onclick="markAllAbsent()"
-                        class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+                    <button onclick="markAllAbsent()" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
                         Mark All Absent
                     </button>
-                    <button onclick="resetAttendance()"
-                        class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">
+                    <button onclick="resetAttendance()" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">
                         Reset
                     </button>
                 </div>
@@ -163,18 +147,10 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Roll No</th>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Student Name</th>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Status</th>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Remarks</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Roll No</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student Name</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Remarks</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200" id="studentList">
@@ -185,8 +161,7 @@
 
                 <!-- Submit Button -->
                 <div class="mt-6 flex justify-end">
-                    <button onclick="submitAttendance()"
-                        class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 font-semibold">
+                    <button onclick="submitAttendance()" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 font-semibold">
                         Submit Attendance
                     </button>
                 </div>
@@ -197,7 +172,7 @@
         <div id="reportsContent" class="tab-content hidden">
             <div class="bg-white rounded-lg shadow-lg p-8">
                 <h2 class="text-2xl font-bold mb-6">Attendance Reports</h2>
-
+                
                 <!-- Report Filters -->
                 <div class="mb-6 flex flex-wrap gap-4">
                     <select class="border border-gray-300 rounded-lg px-4 py-2">
@@ -217,47 +192,6 @@
                         Generate Report
                     </button>
                 </div>
-
-                <!-- Manage Students Tab Content -->
-                <div id="studentsContent" class="tab-content hidden">
-                    <div class="bg-white rounded-lg shadow-lg p-8">
-                        <h2 class="text-2xl font-bold mb-6">Manage Students</h2>
-
-                        <!-- Add Student Form -->
-                        <form id="addStudentForm" class="grid md:grid-cols-4 gap-4 mb-6">
-                            <input type="number" id="roll" placeholder="Roll No" class="border rounded px-3 py-2"
-                                required>
-                            <input type="text" id="name" placeholder="Student Name" class="border rounded px-3 py-2"
-                                required>
-                            <input type="text" id="className" placeholder="Class (e.g. Class 5-A)"
-                                class="border rounded px-3 py-2" required>
-                            <button type="submit"
-                                class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
-                                Add Student
-                            </button>
-                        </form>
-
-                        <!-- Student List -->
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Roll
-                                            No</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name
-                                        </th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                            Class</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="studentManageList" class="bg-white divide-y divide-gray-200">
-                                    <!-- Fetched students will render here -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
 
                 <!-- Summary Cards -->
                 <div class="grid md:grid-cols-4 gap-4 mb-8">
@@ -301,218 +235,120 @@
         </div>
     </div>
 
-<script>
-const API = "http://localhost:4000";
-const token = localStorage.getItem("token");
-if (!token) window.location.href = "teacherloginpage.html";
+    <script>
+        // Sample student data
+        const students = [
+            { roll: 1, name: "Aarav Kumar", present: true },
+            { roll: 2, name: "Diya Patel", present: true },
+            { roll: 3, name: "Arjun Singh", present: true },
+            { roll: 4, name: "Ananya Sharma", present: false },
+            { roll: 5, name: "Kabir Verma", present: true },
+            { roll: 6, name: "Zara Khan", present: true },
+            { roll: 7, name: "Vivaan Reddy", present: false },
+            { roll: 8, name: "Ishita Gupta", present: true },
+            { roll: 9, name: "Aditya Mehta", present: true },
+            { roll: 10, name: "Sara Ali", present: true },
+            { roll: 11, name: "Rohan Joshi", present: true },
+            { roll: 12, name: "Priya Nair", present: true },
+            { roll: 13, name: "Yash Pandey", present: false },
+            { roll: 14, name: "Kavya Rao", present: true },
+            { roll: 15, name: "Om Prakash", present: true }
+        ];
 
-let students = [];
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set today's date
+            document.getElementById('attendanceDate').valueAsDate = new Date();
+            renderStudentList();
+        });
 
-// Auto-load attendance students
-document.addEventListener("DOMContentLoaded", async () => {
-  document.getElementById("attendanceDate").valueAsDate = new Date();
-  await loadStudents();
-});
+        function renderStudentList() {
+            const tbody = document.getElementById('studentList');
+            tbody.innerHTML = students.map(student => `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${student.roll}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${student.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex space-x-3">
+                            <label class="flex items-center">
+                                <input type="radio" name="attendance_${student.roll}" value="present" 
+                                    ${student.present ? 'checked' : ''} 
+                                    onchange="updateAttendance(${student.roll}, 'present')"
+                                    class="mr-2">
+                                <span class="text-green-600 font-semibold">Present</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="attendance_${student.roll}" value="absent" 
+                                    ${!student.present ? 'checked' : ''}
+                                    onchange="updateAttendance(${student.roll}, 'absent')"
+                                    class="mr-2">
+                                <span class="text-red-600 font-semibold">Absent</span>
+                            </label>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <input type="text" placeholder="Optional remarks" 
+                            class="border border-gray-300 rounded px-2 py-1 text-sm w-full">
+                    </td>
+                </tr>
+            `).join('');
+        }
 
-// ========== ATTENDANCE LOGIC ==========
-async function loadStudents() {
-  const cls = document.getElementById("classSelect").value;
-  const res = await fetch(`${API}/students?className=${encodeURIComponent(cls)}`, {
-    headers: { Authorization: `Bearer ${token}` }
-  });
-  students = await res.json();
+        function updateAttendance(roll, status) {
+            const student = students.find(s => s.roll === roll);
+            if (student) {
+                student.present = status === 'present';
+            }
+        }
 
-  if (!Array.isArray(students) || students.length === 0) {
-    alert(`⚠️ No students found for ${cls}. Please add them in Manage Students.`);
-    students = [];
-  } else {
-    students = students.map(s => ({ ...s, present: true, remarks: "" }));
-  }
+        function markAllPresent() {
+            students.forEach(student => student.present = true);
+            renderStudentList();
+        }
 
-  renderStudentList();
-}
+        function markAllAbsent() {
+            students.forEach(student => student.present = false);
+            renderStudentList();
+        }
 
-function renderStudentList() {
-  const tbody = document.getElementById("studentList");
-  tbody.innerHTML = students.map(s => `
-    <tr>
-      <td class="px-6 py-4 text-sm">${s.roll}</td>
-      <td class="px-6 py-4 text-sm">${s.name}</td>
-      <td class="px-6 py-4">
-        <label class="mr-4">
-          <input type="radio" name="att_${s._id}" value="present"
-                 ${s.present ? "checked" : ""}
-                 onchange="setAttendance('${s._id}', true)">
-          <span class="text-green-600 font-semibold">Present</span>
-        </label>
-        <label>
-          <input type="radio" name="att_${s._id}" value="absent"
-                 ${!s.present ? "checked" : ""}
-                 onchange="setAttendance('${s._id}', false)">
-          <span class="text-red-600 font-semibold">Absent</span>
-        </label>
-      </td>
-      <td class="px-6 py-4">
-        <input type="text" id="remark_${s._id}" value="${s.remarks || ""}"
-               class="border rounded px-2 py-1 text-sm w-full"
-               placeholder="Optional remarks"
-               oninput="setRemark('${s._id}', this.value)">
-      </td>
-    </tr>
-  `).join('');
-}
+        function resetAttendance() {
+            students.forEach(student => student.present = true);
+            renderStudentList();
+        }
 
-function setAttendance(id, present) {
-  const student = students.find(x => x._id === id);
-  if (student) student.present = present;
-}
-function setRemark(id, text) {
-  const student = students.find(x => x._id === id);
-  if (student) student.remarks = text;
-}
+        function submitAttendance() {
+            const presentCount = students.filter(s => s.present).length;
+            const totalCount = students.length;
+            const percentage = ((presentCount / totalCount) * 100).toFixed(1);
+            
+            alert(`Attendance Submitted Successfully!\n\nClass: ${document.getElementById('classSelect').value}\nDate: ${document.getElementById('attendanceDate').value}\nPresent: ${presentCount}/${totalCount} (${percentage}%)`);
+        }
 
-function markAllPresent() {
-  students.forEach(s => s.present = true);
-  renderStudentList();
-}
-function markAllAbsent() {
-  students.forEach(s => s.present = false);
-  renderStudentList();
-}
-function resetAttendance() {
-  students.forEach(s => { s.present = true; s.remarks = "" });
-  renderStudentList();
-}
+        function switchTab(tab) {
+            // Hide all content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('[id$="Tab"]').forEach(tabBtn => {
+                tabBtn.classList.remove('tab-active', 'text-indigo-600');
+                tabBtn.classList.add('text-gray-500');
+            });
+            
+            // Show selected content
+            document.getElementById(tab + 'Content').classList.remove('hidden');
+            
+            // Make selected tab active
+            document.getElementById(tab + 'Tab').classList.add('tab-active', 'text-indigo-600');
+            document.getElementById(tab + 'Tab').classList.remove('text-gray-500');
+        }
 
-async function submitAttendance() {
-  const cls = document.getElementById("classSelect").value;
-  const date = document.getElementById("attendanceDate").value;
-
-  const entries = students.map(s => ({
-    studentId: s._id,
-    present: s.present,
-    remarks: s.remarks || ""
-  }));
-
-  const res = await fetch(`${API}/attendance/mark`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify({ date, className: cls, entries })
-  });
-
-  if (res.ok) {
-    alert("✅ Attendance saved successfully!");
-  } else {
-    const err = await res.json();
-    alert("❌ Error: " + err.message);
-  }
-}
-
-document.getElementById("classSelect").addEventListener("change", loadStudents);
-
-// ========== MANAGE STUDENTS ==========
-async function loadAllStudents() {
-  const cls = document.getElementById("classSelect").value;
-  const res = await fetch(`${API}/students?className=${encodeURIComponent(cls)}`, {
-    headers: { Authorization: `Bearer ${token}` }
-  });
-  const data = await res.json();
-
-  const tbody = document.getElementById("studentManageList");
-  tbody.innerHTML = data.map(s => `
-    <tr>
-      <td class="px-6 py-4 text-sm">${s.roll}</td>
-      <td class="px-6 py-4 text-sm">${s.name}</td>
-      <td class="px-6 py-4 text-sm">${s.className}</td>
-    </tr>
-  `).join('');
-}
-
-document.getElementById("addStudentForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const roll = document.getElementById("roll").value;
-  const name = document.getElementById("name").value;
-  const className = document.getElementById("className").value;
-
-  const res = await fetch(`${API}/students`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify({ students: [{ roll, name, className }] })
-  });
-
-  if (res.ok) {
-    alert("✅ Student added!");
-    document.getElementById("addStudentForm").reset();
-    loadAllStudents();
-  } else {
-    const err = await res.json();
-    alert("❌ Error: " + err.message);
-  }
-});
-
-function openStudentsTab() {
-  switchTab("students");
-  loadAllStudents();
-}
-document.getElementById("studentsTab").setAttribute("onclick", "openStudentsTab()");
-
-// ========== REPORTS ==========
-async function generateReport() {
-  const cls = document.querySelector('#reportsContent select:nth-of-type(1)').value;
-  const type = document.querySelector('#reportsContent select:nth-of-type(2)').value;
-  const fromDate = document.querySelector('#reportsContent input:nth-of-type(1)').value;
-  const toDate = document.querySelector('#reportsContent input:nth-of-type(2)').value;
-
-  if (cls === "Select Class" || type === "Report Type" || !fromDate || !toDate) {
-    alert("⚠️ Please choose class, report type, and date range");
-    return;
-  }
-
-  const url = `${API}/reports/summary?className=${encodeURIComponent(cls)}&from=${fromDate}&to=${toDate}`;
-  const res = await fetch(url, {
-    headers: { Authorization: `Bearer ${token}` }
-  });
-
-  if (!res.ok) {
-    alert("❌ Error generating report");
-    return;
-  }
-
-  const data = await res.json();
-
-  document.getElementById("avgAttendance").textContent = data.average + "%";
-  document.getElementById("perfectAttendance").textContent = data.perfectCount;
-  document.getElementById("below75").textContent = data.below75Count;
-  document.getElementById("totalDays").textContent = data.days;
-
-  const recentReports = document.querySelector("#reportsContent .space-y-3");
-  const now = new Date().toLocaleDateString();
-  recentReports.innerHTML = `
-    <div class="border border-gray-200 rounded-lg p-4 flex justify-between items-center">
-      <div>
-        <p class="font-semibold">${cls} - ${type} Report</p>
-        <p class="text-sm text-gray-600">Generated on: ${now}</p>
-      </div>
-      <button onclick="downloadReport('${cls}', '${fromDate}', '${toDate}')"
-              class="text-indigo-600 hover:text-indigo-800">Download PDF</button>
-    </div>
-  `;
-}
-document.querySelector("#reportsContent button").setAttribute("onclick", "generateReport()");
-
-function downloadReport(cls, fromDate, toDate) {
-  alert(`📄 PDF export stub — Class: ${cls}, From: ${fromDate}, To: ${toDate}`);
-}
-</script>
-
-
-
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = 'teacherloginpage.html';
+            }
+        }
+    </script>
 </body>
-
 </html>
