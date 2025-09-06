@@ -28,7 +28,7 @@
                     <span class="ml-2 text-xl font-semibold">Teacher's Dashboard</span>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <span class="text-sm text-gray-600">Welcome, Mr Xyz</span>
+                    <span class="text-sm text-gray-600">Welcome, <span id="teacherName">Teacher</span></span>
                     <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-600">
                         Logout
                     </button>
@@ -62,37 +62,37 @@
                     <div class="space-y-4">
                         <div>
                             <p class="text-sm text-gray-600">Full Name</p>
-                            <p class="text-lg font-semibold">Mr. Xyz</p>
+                            <p class="text-lg font-semibold" id="profileName">Loading...</p>
                         </div>
                         <div>
-                            <p class="text-sm text-gray-600">Employee ID</p>
-                            <p class="text-lg font-semibold">TCH2024001</p>
+                            <p class="text-sm text-gray-600">Teacher ID</p>
+                            <p class="text-lg font-semibold" id="profileId">Loading...</p>
                         </div>
                         <div>
                             <p class="text-sm text-gray-600">Email</p>
-                            <p class="text-lg font-semibold">teacher@demo.com</p>
+                            <p class="text-lg font-semibold" id="profileEmail">Loading...</p>
                         </div>
                         <div>
                             <p class="text-sm text-gray-600">Phone</p>
-                            <p class="text-lg font-semibold">+91 98765xxxx</p>
+                            <p class="text-lg font-semibold" id="profilePhone">+91 98765xxxx</p>
                         </div>
                     </div>
                     <div class="space-y-4">
                         <div>
                             <p class="text-sm text-gray-600">School</p>
-                            <p class="text-lg font-semibold">Government Primary School, Jaipur</p>
+                            <p class="text-lg font-semibold" id="profileSchool">Government Primary School, Jaipur</p>
                         </div>
                         <div>
                             <p class="text-sm text-gray-600">Subjects Teaching</p>
-                            <p class="text-lg font-semibold">Mathematics, Science</p>
+                            <p class="text-lg font-semibold" id="profileSubjects">Mathematics, Science</p>
                         </div>
                         <div>
                             <p class="text-sm text-gray-600">Classes Assigned</p>
-                            <p class="text-lg font-semibold">Class 5-A, Class 6-B</p>
+                            <p class="text-lg font-semibold" id="profileClasses">Class 5-A, Class 6-B</p>
                         </div>
                         <div>
                             <p class="text-sm text-gray-600">Join Date</p>
-                            <p class="text-lg font-semibold">15 July 2020</p>
+                            <p class="text-lg font-semibold" id="profileJoinDate">15 July 2020</p>
                         </div>
                     </div>
                 </div>
@@ -101,15 +101,15 @@
                 <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-blue-50 p-4 rounded-lg">
                         <p class="text-sm text-blue-600">Total Students</p>
-                        <p class="text-2xl font-bold text-blue-800">65</p>
+                        <p class="text-2xl font-bold text-blue-800" id="totalStudents">0</p>
                     </div>
                     <div class="bg-green-50 p-4 rounded-lg">
-                        <p class="text-sm text-green-600">Today's Attendance</p>
-                        <p class="text-2xl font-bold text-green-800">92%</p>
+                        <p class="text-sm text-green-600">Current Attendance</p>
+                        <p class="text-2xl font-bold text-green-800" id="currentAttendance">0%</p>
                     </div>
                     <div class="bg-purple-50 p-4 rounded-lg">
                         <p class="text-sm text-purple-600">Classes Today</p>
-                        <p class="text-2xl font-bold text-purple-800">4</p>
+                        <p class="text-2xl font-bold text-purple-800">2</p>
                     </div>
                 </div>
             </div>
@@ -121,9 +121,10 @@
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-2xl font-bold">Mark Attendance</h2>
                     <div class="flex items-center space-x-4">
-                        <select id="classSelect" class="border border-gray-300 rounded-lg px-4 py-2">
-                            <option>Class 5-A</option>
-                            <option>Class 6-B</option>
+                        <select id="classSelect" class="border border-gray-300 rounded-lg px-4 py-2" onchange="loadStudents()">
+                            <option value="">Select Class</option>
+                            <option value="Class 5-A">Class 5-A</option>
+                            <option value="Class 6-B">Class 6-B</option>
                         </select>
                         <input type="date" id="attendanceDate" class="border border-gray-300 rounded-lg px-4 py-2">
                     </div>
@@ -142,8 +143,19 @@
                     </button>
                 </div>
 
+                <!-- Loading State -->
+                <div id="loadingStudents" class="text-center py-8 hidden">
+                    <div class="inline-flex items-center">
+                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <p class="text-gray-600">Loading students...</p>
+                    </div>
+                </div>
+
                 <!-- Student List -->
-                <div class="overflow-x-auto">
+                <div class="overflow-x-auto" id="studentTableContainer">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
@@ -154,14 +166,29 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200" id="studentList">
-                            <!-- Students will be populated here -->
+                            <tr>
+                                <td colspan="4" class="px-6 py-4 text-center text-gray-500">
+                                    Please select a class to view students
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
 
+                <!-- Attendance Summary -->
+                <div id="attendanceSummary" class="mt-4 p-4 bg-gray-50 rounded-lg hidden">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-gray-700">Attendance Summary:</span>
+                        <span id="summaryText" class="text-sm text-gray-600">0 present, 0 absent (0%)</span>
+                    </div>
+                </div>
+
                 <!-- Submit Button -->
-                <div class="mt-6 flex justify-end">
-                    <button onclick="submitAttendance()" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 font-semibold">
+                <div class="mt-6 flex justify-end space-x-4">
+                    <button onclick="previewAttendance()" class="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 font-semibold">
+                        Preview
+                    </button>
+                    <button id="submitBtn" onclick="submitAttendance()" disabled class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed">
                         Submit Attendance
                     </button>
                 </div>
@@ -174,154 +201,466 @@
                 <h2 class="text-2xl font-bold mb-6">Attendance Reports</h2>
                 
                 <!-- Report Filters -->
-                <div class="mb-6 flex flex-wrap gap-4">
-                    <select class="border border-gray-300 rounded-lg px-4 py-2">
-                        <option>Select Class</option>
-                        <option>Class 5-A</option>
-                        <option>Class 6-B</option>
+                <div class="mb-6 grid grid-cols-1 md:grid-cols-5 gap-4">
+                    <select id="reportClassSelect" class="border border-gray-300 rounded-lg px-4 py-2">
+                        <option value="">Select Class</option>
+                        <option value="Class 5-A">Class 5-A</option>
+                        <option value="Class 6-B">Class 6-B</option>
                     </select>
-                    <select class="border border-gray-300 rounded-lg px-4 py-2">
-                        <option>Report Type</option>
-                        <option>Daily</option>
-                        <option>Weekly</option>
-                        <option>Monthly</option>
-                    </select>
-                    <input type="date" class="border border-gray-300 rounded-lg px-4 py-2" placeholder="From Date">
-                    <input type="date" class="border border-gray-300 rounded-lg px-4 py-2" placeholder="To Date">
-                    <button class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700">
+                    <input type="date" id="reportFromDate" class="border border-gray-300 rounded-lg px-4 py-2" placeholder="From Date">
+                    <input type="date" id="reportToDate" class="border border-gray-300 rounded-lg px-4 py-2" placeholder="To Date">
+                    <button onclick="generateReport()" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700">
                         Generate Report
+                    </button>
+                    <button onclick="clearReport()" class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600">
+                        Clear
                     </button>
                 </div>
 
-                <!-- Summary Cards -->
-                <div class="grid md:grid-cols-4 gap-4 mb-8">
-                    <div class="bg-blue-50 p-4 rounded-lg">
-                        <p class="text-sm text-blue-600">Average Attendance</p>
-                        <p class="text-2xl font-bold text-blue-800">87.5%</p>
-                    </div>
-                    <div class="bg-green-50 p-4 rounded-lg">
-                        <p class="text-sm text-green-600">Perfect Attendance</p>
-                        <p class="text-2xl font-bold text-green-800">12</p>
-                    </div>
-                    <div class="bg-yellow-50 p-4 rounded-lg">
-                        <p class="text-sm text-yellow-600">Below 75%</p>
-                        <p class="text-2xl font-bold text-yellow-800">5</p>
-                    </div>
-                    <div class="bg-red-50 p-4 rounded-lg">
-                        <p class="text-sm text-red-600">Chronic Absence</p>
-                        <p class="text-2xl font-bold text-red-800">2</p>
+                <!-- Loading State for Reports -->
+                <div id="loadingReport" class="text-center py-8 hidden">
+                    <div class="inline-flex items-center">
+                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <p class="text-gray-600">Generating report...</p>
                     </div>
                 </div>
 
-                <!-- Recent Reports -->
-                <h3 class="text-lg font-semibold mb-4">Recent Reports</h3>
-                <div class="space-y-3">
-                    <div class="border border-gray-200 rounded-lg p-4 flex justify-between items-center">
-                        <div>
-                            <p class="font-semibold">Class 5-A - Monthly Report</p>
-                            <p class="text-sm text-gray-600">Generated on: 01 Sept 2025</p>
-                        </div>
-                        <button class="text-indigo-600 hover:text-indigo-800">Download PDF</button>
+                <!-- Summary Cards -->
+                <div class="grid md:grid-cols-4 gap-4 mb-8" id="reportSummary">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <p class="text-sm text-blue-600">Average Attendance</p>
+                        <p class="text-2xl font-bold text-blue-800" id="avgAttendance">--</p>
                     </div>
-                    <div class="border border-gray-200 rounded-lg p-4 flex justify-between items-center">
-                        <div>
-                            <p class="font-semibold">Class 6-B - Weekly Report</p>
-                            <p class="text-sm text-gray-600">Generated on: 30 Aug 2025</p>
-                        </div>
-                        <button class="text-indigo-600 hover:text-indigo-800">Download PDF</button>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <p class="text-sm text-green-600">Perfect Attendance</p>
+                        <p class="text-2xl font-bold text-green-800" id="perfectAttendance">--</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg">
+                        <p class="text-sm text-yellow-600">Below 75%</p>
+                        <p class="text-2xl font-bold text-yellow-800" id="below75">--</p>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <p class="text-sm text-red-600">Total Days</p>
+                        <p class="text-2xl font-bold text-red-800" id="totalDays">--</p>
+                    </div>
+                </div>
+
+                <!-- Report Results -->
+                <div id="reportResults" class="hidden">
+                    <h3 class="text-lg font-semibold mb-4">Report Details</h3>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <p id="reportDetailsText" class="text-gray-700"></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // Sample student data
-        const students = [
-            { roll: 1, name: "Aarav Kumar", present: true },
-            { roll: 2, name: "Diya Patel", present: true },
-            { roll: 3, name: "Arjun Singh", present: true },
-            { roll: 4, name: "Ananya Sharma", present: false },
-            { roll: 5, name: "Kabir Verma", present: true },
-            { roll: 6, name: "Zara Khan", present: true },
-            { roll: 7, name: "Vivaan Reddy", present: false },
-            { roll: 8, name: "Ishita Gupta", present: true },
-            { roll: 9, name: "Aditya Mehta", present: true },
-            { roll: 10, name: "Sara Ali", present: true },
-            { roll: 11, name: "Rohan Joshi", present: true },
-            { roll: 12, name: "Priya Nair", present: true },
-            { roll: 13, name: "Yash Pandey", present: false },
-            { roll: 14, name: "Kavya Rao", present: true },
-            { roll: 15, name: "Om Prakash", present: true }
-        ];
+    <!-- Preview Modal -->
+    <div id="previewModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="bg-white rounded-lg p-6 max-w-2xl w-full mx-4 max-h-96 overflow-y-auto">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold">Attendance Preview</h3>
+                    <button onclick="closePreview()" class="text-gray-500 hover:text-gray-700">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div id="previewContent">
+                    <!-- Preview content will be inserted here -->
+                </div>
+                <div class="mt-6 flex justify-end space-x-4">
+                    <button onclick="closePreview()" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">
+                        Cancel
+                    </button>
+                    <button onclick="confirmSubmit()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
+                        Confirm & Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set today's date
-            document.getElementById('attendanceDate').valueAsDate = new Date();
-            renderStudentList();
-        });
+    <script>
+        const API_BASE = 'http://localhost:4000';
+        let authToken = localStorage.getItem('authToken');
+        let students = [];
+        let currentAttendance = {};
+
+        // Check authentication on page load
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     if (!authToken) {
+        //         alert('Please login first');
+        //         window.location.href = 'teacherloginpage.html';
+        //         return;
+        //     }
+
+        //     // Set today's date
+        //     const today = new Date();
+        //     document.getElementById('attendanceDate').valueAsDate = today;
+            
+        //     // Set report dates (last 30 days)
+        //     const thirtyDaysAgo = new Date();
+        //     thirtyDaysAgo.setDate(today.getDate() - 30);
+            
+        //     document.getElementById('reportFromDate').valueAsDate = thirtyDaysAgo;
+        //     document.getElementById('reportToDate').valueAsDate = today;
+            
+        //     // Load teacher profile
+        //     loadTeacherProfile();
+        // });
+
+        function loadTeacherProfile() {
+            const teacherData = localStorage.getItem('teacherData');
+            if (teacherData) {
+                const teacher = JSON.parse(teacherData);
+                document.getElementById('teacherName').textContent = teacher.name || 'Teacher';
+                document.getElementById('profileName').textContent = teacher.name || 'Demo Teacher';
+                document.getElementById('profileEmail').textContent = teacher.email || 'teacher@demo.com';
+                document.getElementById('profileId').textContent = teacher.id || teacher._id || 'TCH2024001';
+                
+                // Set other profile fields if available
+                if (teacher.phone) document.getElementById('profilePhone').textContent = teacher.phone;
+                if (teacher.school) document.getElementById('profileSchool').textContent = teacher.school;
+                if (teacher.subjects) document.getElementById('profileSubjects').textContent = teacher.subjects.join(', ');
+                if (teacher.classes) document.getElementById('profileClasses').textContent = teacher.classes.join(', ');
+                if (teacher.joinDate) document.getElementById('profileJoinDate').textContent = teacher.joinDate;
+            }
+        }
+
+        async function loadStudents() {
+            const className = document.getElementById('classSelect').value;
+            if (!className) {
+                document.getElementById('studentList').innerHTML = `
+                    <tr>
+                        <td colspan="4" class="px-6 py-4 text-center text-gray-500">
+                            Please select a class to view students
+                        </td>
+                    </tr>
+                `;
+                document.getElementById('attendanceSummary').classList.add('hidden');
+                document.getElementById('submitBtn').disabled = true;
+                return;
+            }
+
+            document.getElementById('loadingStudents').classList.remove('hidden');
+            document.getElementById('studentTableContainer').classList.add('opacity-50');
+            
+            try {
+                const response = await fetch(`${API_BASE}/students?className=${encodeURIComponent(className)}`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to load students: ${response.status}`);
+                }
+
+                students = await response.json();
+                
+                if (students.length === 0) {
+                    document.getElementById('studentList').innerHTML = `
+                        <tr>
+                            <td colspan="4" class="px-6 py-4 text-center text-orange-600">
+                                No students found in this class. Please add students first or try a different class.
+                            </td>
+                        </tr>
+                    `;
+                    document.getElementById('attendanceSummary').classList.add('hidden');
+                    document.getElementById('submitBtn').disabled = true;
+                    return;
+                }
+                
+                // Initialize attendance state
+                currentAttendance = {};
+                students.forEach(student => {
+                    currentAttendance[student._id] = { present: true, remarks: '' };
+                });
+
+                renderStudentList();
+                updateAttendanceStats();
+                document.getElementById('submitBtn').disabled = false;
+                
+            } catch (error) {
+                console.error('Error loading students:', error);
+                document.getElementById('studentList').innerHTML = `
+                    <tr>
+                        <td colspan="4" class="px-6 py-4 text-center text-red-500">
+                            Error loading students: ${error.message}
+                            <br><small>Make sure the server is running and try refreshing the page.</small>
+                        </td>
+                    </tr>
+                `;
+                document.getElementById('submitBtn').disabled = true;
+            } finally {
+                document.getElementById('loadingStudents').classList.add('hidden');
+                document.getElementById('studentTableContainer').classList.remove('opacity-50');
+            }
+        }
 
         function renderStudentList() {
             const tbody = document.getElementById('studentList');
             tbody.innerHTML = students.map(student => `
-                <tr>
+                <tr class="hover:bg-gray-50">
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${student.roll}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${student.name}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex space-x-3">
-                            <label class="flex items-center">
-                                <input type="radio" name="attendance_${student.roll}" value="present" 
-                                    ${student.present ? 'checked' : ''} 
-                                    onchange="updateAttendance(${student.roll}, 'present')"
-                                    class="mr-2">
+                        <div class="flex space-x-4">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="attendance_${student._id}" value="present" 
+                                    ${currentAttendance[student._id].present ? 'checked' : ''} 
+                                    onchange="updateAttendance('${student._id}', true)"
+                                    class="mr-2 text-green-600">
                                 <span class="text-green-600 font-semibold">Present</span>
                             </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="attendance_${student.roll}" value="absent" 
-                                    ${!student.present ? 'checked' : ''}
-                                    onchange="updateAttendance(${student.roll}, 'absent')"
-                                    class="mr-2">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="attendance_${student._id}" value="absent" 
+                                    ${!currentAttendance[student._id].present ? 'checked' : ''}
+                                    onchange="updateAttendance('${student._id}', false)"
+                                    class="mr-2 text-red-600">
                                 <span class="text-red-600 font-semibold">Absent</span>
                             </label>
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <input type="text" placeholder="Optional remarks" 
-                            class="border border-gray-300 rounded px-2 py-1 text-sm w-full">
+                            value="${currentAttendance[student._id].remarks}"
+                            onchange="updateRemarks('${student._id}', this.value)"
+                            class="border border-gray-300 rounded px-2 py-1 text-sm w-full focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                     </td>
                 </tr>
             `).join('');
         }
 
-        function updateAttendance(roll, status) {
-            const student = students.find(s => s.roll === roll);
-            if (student) {
-                student.present = status === 'present';
-            }
+        function updateAttendance(studentId, present) {
+            currentAttendance[studentId].present = present;
+            updateAttendanceStats();
+        }
+
+        function updateRemarks(studentId, remarks) {
+            currentAttendance[studentId].remarks = remarks;
+        }
+
+        function updateAttendanceStats() {
+            const presentCount = Object.values(currentAttendance).filter(a => a.present).length;
+            const absentCount = students.length - presentCount;
+            const totalCount = students.length;
+            const percentage = totalCount > 0 ? ((presentCount / totalCount) * 100).toFixed(1) : 0;
+            
+            document.getElementById('totalStudents').textContent = totalCount;
+            document.getElementById('currentAttendance').textContent = `${percentage}%`;
+            
+            // Update summary
+            document.getElementById('summaryText').textContent = 
+                `${presentCount} present, ${absentCount} absent (${percentage}%)`;
+            document.getElementById('attendanceSummary').classList.remove('hidden');
         }
 
         function markAllPresent() {
-            students.forEach(student => student.present = true);
+            Object.keys(currentAttendance).forEach(studentId => {
+                currentAttendance[studentId].present = true;
+            });
             renderStudentList();
+            updateAttendanceStats();
         }
 
         function markAllAbsent() {
-            students.forEach(student => student.present = false);
+            Object.keys(currentAttendance).forEach(studentId => {
+                currentAttendance[studentId].present = false;
+            });
             renderStudentList();
+            updateAttendanceStats();
         }
 
         function resetAttendance() {
-            students.forEach(student => student.present = true);
+            Object.keys(currentAttendance).forEach(studentId => {
+                currentAttendance[studentId].present = true;
+                currentAttendance[studentId].remarks = '';
+            });
             renderStudentList();
+            updateAttendanceStats();
         }
 
-        function submitAttendance() {
-            const presentCount = students.filter(s => s.present).length;
-            const totalCount = students.length;
-            const percentage = ((presentCount / totalCount) * 100).toFixed(1);
+        function previewAttendance() {
+            const className = document.getElementById('classSelect').value;
+            const date = document.getElementById('attendanceDate').value;
             
-            alert(`Attendance Submitted Successfully!\n\nClass: ${document.getElementById('classSelect').value}\nDate: ${document.getElementById('attendanceDate').value}\nPresent: ${presentCount}/${totalCount} (${percentage}%)`);
+            if (!className || !date || students.length === 0) {
+                alert('Please select class, date and ensure students are loaded');
+                return;
+            }
+
+            const presentStudents = students.filter(s => currentAttendance[s._id].present);
+            const absentStudents = students.filter(s => !currentAttendance[s._id].present);
+            const studentsWithRemarks = students.filter(s => currentAttendance[s._id].remarks.trim());
+
+            const previewHTML = `
+                <div class="space-y-4">
+                    <div class="bg-blue-50 p-3 rounded">
+                        <strong>Class:</strong> ${className}<br>
+                        <strong>Date:</strong> ${date}<br>
+                        <strong>Total Students:</strong> ${students.length}
+                    </div>
+                    
+                    <div class="bg-green-50 p-3 rounded">
+                        <strong>Present (${presentStudents.length}):</strong><br>
+                        ${presentStudents.map(s => `• ${s.name} (${s.roll})`).join('<br>') || 'None'}
+                    </div>
+                    
+                    ${absentStudents.length > 0 ? `
+                    <div class="bg-red-50 p-3 rounded">
+                        <strong>Absent (${absentStudents.length}):</strong><br>
+                        ${absentStudents.map(s => `• ${s.name} (${s.roll})`).join('<br>')}
+                    </div>
+                    ` : ''}
+                    
+                    ${studentsWithRemarks.length > 0 ? `
+                    <div class="bg-yellow-50 p-3 rounded">
+                        <strong>With Remarks:</strong><br>
+                        ${studentsWithRemarks.map(s => `• ${s.name}: ${currentAttendance[s._id].remarks}`).join('<br>')}
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+
+            document.getElementById('previewContent').innerHTML = previewHTML;
+            document.getElementById('previewModal').classList.remove('hidden');
+        }
+
+        function closePreview() {
+            document.getElementById('previewModal').classList.add('hidden');
+        }
+
+        async function confirmSubmit() {
+            closePreview();
+            await submitAttendance();
+        }
+
+        async function submitAttendance() {
+            const className = document.getElementById('classSelect').value;
+            const date = document.getElementById('attendanceDate').value;
+            
+            if (!className || !date) {
+                alert('Please select class and date');
+                return;
+            }
+
+            if (students.length === 0) {
+                alert('No students to submit attendance for');
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
+
+            const entries = students.map(student => ({
+                studentId: student._id,
+                present: currentAttendance[student._id].present,
+                remarks: currentAttendance[student._id].remarks || ''
+            }));
+
+            try {
+                const response = await fetch(`${API_BASE}/attendance/mark`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ date, className, entries })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    const presentCount = Object.values(currentAttendance).filter(a => a.present).length;
+                    const totalCount = students.length;
+                    const percentage = ((presentCount / totalCount) * 100).toFixed(1);
+                    
+                    alert(`Attendance Submitted Successfully!\n\nClass: ${className}\nDate: ${date}\nPresent: ${presentCount}/${totalCount} (${percentage}%)`);
+                    
+                    // Optionally clear the form or keep it for editing
+                    // resetAttendance();
+                } else {
+                    throw new Error(result.message || 'Failed to submit attendance');
+                }
+            } catch (error) {
+                console.error('Submit error:', error);
+                alert(`Failed to submit attendance: ${error.message}`);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        async function generateReport() {
+            const className = document.getElementById('reportClassSelect').value;
+            const fromDate = document.getElementById('reportFromDate').value;
+            const toDate = document.getElementById('reportToDate').value;
+
+            if (!className || !fromDate || !toDate) {
+                alert('Please fill all report fields');
+                return;
+            }
+
+            if (new Date(fromDate) > new Date(toDate)) {
+                alert('From date cannot be later than To date');
+                return;
+            }
+
+            document.getElementById('loadingReport').classList.remove('hidden');
+
+            try {
+                const response = await fetch(`${API_BASE}/reports/summary?className=${encodeURIComponent(className)}&from=${fromDate}&to=${toDate}`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    document.getElementById('avgAttendance').textContent = `${data.average}%`;
+                    document.getElementById('perfectAttendance').textContent = data.perfectCount || 0;
+                    document.getElementById('below75').textContent = data.below75Count || 0;
+                    document.getElementById('totalDays').textContent = data.days || 0;
+                    
+                    // Show report results
+                    const reportDetailsText = `
+                        Report generated for ${className} from ${fromDate} to ${toDate}.
+                        Total tracking days: ${data.days || 0}. 
+                        Students with perfect attendance: ${data.perfectCount || 0}.
+                        Students below 75% attendance: ${data.below75Count || 0}.
+                        ${data.chronicAbsenceCount ? `Chronic absence cases: ${data.chronicAbsenceCount}.` : ''}
+                    `;
+                    document.getElementById('reportDetailsText').textContent = reportDetailsText.trim();
+                    document.getElementById('reportResults').classList.remove('hidden');
+                } else {
+                    const error = await response.json();
+                    throw new Error(error.message || 'Failed to generate report');
+                }
+            } catch (error) {
+                console.error('Report error:', error);
+                alert(`Failed to generate report: ${error.message}`);
+                clearReport();
+            } finally {
+                document.getElementById('loadingReport').classList.add('hidden');
+            }
+        }
+
+        function clearReport() {
+            document.getElementById('avgAttendance').textContent = '--';
+            document.getElementById('perfectAttendance').textContent = '--';
+            document.getElementById('below75').textContent = '--';
+            document.getElementById('totalDays').textContent = '--';
+            document.getElementById('reportResults').classList.add('hidden');
         }
 
         function switchTab(tab) {
@@ -342,13 +681,82 @@
             // Make selected tab active
             document.getElementById(tab + 'Tab').classList.add('tab-active', 'text-indigo-600');
             document.getElementById(tab + 'Tab').classList.remove('text-gray-500');
+            
+            // Load data for specific tabs
+            if (tab === 'attendance' && students.length === 0) {
+                // Auto-load students if a class is already selected
+                const selectedClass = document.getElementById('classSelect').value;
+                if (selectedClass) {
+                    loadStudents();
+                }
+            }
         }
 
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('teacherData');
                 window.location.href = 'teacherloginpage.html';
             }
         }
+
+        // Handle authentication errors globally
+        window.addEventListener('unhandledrejection', function(event) {
+            if (event.reason && event.reason.message && event.reason.message.includes('401')) {
+                alert('Your session has expired. Please login again.');
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('teacherData');
+                window.location.href = 'teacherloginpage.html';
+            }
+        });
+
+        // Auto-save attendance draft (optional feature)
+        function saveAttendanceDraft() {
+            const className = document.getElementById('classSelect').value;
+            const date = document.getElementById('attendanceDate').value;
+            if (className && date && Object.keys(currentAttendance).length > 0) {
+                const draftKey = `attendance_draft_${className}_${date}`;
+                localStorage.setItem(draftKey, JSON.stringify(currentAttendance));
+            }
+        }
+
+        function loadAttendanceDraft() {
+            const className = document.getElementById('classSelect').value;
+            const date = document.getElementById('attendanceDate').value;
+            if (className && date) {
+                const draftKey = `attendance_draft_${className}_${date}`;
+                const draft = localStorage.getItem(draftKey);
+                if (draft) {
+                    const savedAttendance = JSON.parse(draft);
+                    // Only load if we have students loaded and the draft matches
+                    if (students.length > 0) {
+                        let hasValidData = false;
+                        students.forEach(student => {
+                            if (savedAttendance[student._id]) {
+                                currentAttendance[student._id] = savedAttendance[student._id];
+                                hasValidData = true;
+                            }
+                        });
+                        if (hasValidData) {
+                            renderStudentList();
+                            updateAttendanceStats();
+                        }
+                    }
+                }
+            }
+        }
+
+        // Auto-save every 30 seconds
+        setInterval(saveAttendanceDraft, 30000);
+        
+        // Load draft when students are loaded
+        const originalLoadStudents = loadStudents;
+        loadStudents = async function() {
+            await originalLoadStudents();
+            if (students.length > 0) {
+                setTimeout(loadAttendanceDraft, 100); // Small delay to ensure rendering is complete
+            }
+        };
     </script>
 </body>
 </html>

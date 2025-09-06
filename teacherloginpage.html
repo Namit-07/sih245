@@ -16,9 +16,9 @@
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center login-bg">
-    <div class="max-w-4xl  mx-4"></div>
+    <div class="max-w-4xl mx-4">
         <!-- Login Card -->
-        <div class="bg-white rounded-2xl shadow-2xl p-8 w-[50vw]">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 w-[50vw] min-w-[400px]">
             <!-- Logo and Title -->
             <div class="text-center mb-8">
                 <div class="inline-flex items-center justify-center w-16 h-16 bg-indigo-100 rounded-full mb-4">
@@ -30,7 +30,8 @@
                 <p class="text-gray-600 mt-2">Sign in to access your dashboard</p>
             </div>
 
-            <!-- Login Form -->
+            
+             <!-- Login Form -->
             <form id="loginForm" class="space-y-6">
                 <!-- Email Field -->
                 <div>
@@ -38,7 +39,8 @@
                     <div class="relative">
                         <input type="email" id="email" name="email" required 
                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
-                               placeholder="teacher@school.edu">
+                               placeholder="teacher@demo.com"
+                               value="teacher@demo.com">
                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                             <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
@@ -53,7 +55,8 @@
                     <div class="relative">
                         <input type="password" id="password" name="password" required 
                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
-                               placeholder="••••••••">
+                               placeholder="••••••••"
+                               value="teacher@demo.com">
                         <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 pr-3 flex items-center">
                             <svg id="eyeIcon" class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -72,9 +75,9 @@
                             Remember me
                         </label>
                     </div>
-                    <a href="#" class="text-sm text-indigo-600 hover:text-indigo-500">
-                        Forgot password?
-                    </a>
+                    <button type="button" onclick="seedDemoData()" class="text-sm text-green-600 hover:text-green-500">
+                        Seed Demo Data
+                    </button>
                 </div>
 
                 <!-- Submit Button -->
@@ -83,9 +86,19 @@
                     Sign In
                 </button>
 
+                <!-- Loading State -->
+                <div id="loadingMessage" class="hidden text-center text-indigo-600">
+                    Signing in...
+                </div>
+
                 <!-- Error Message -->
                 <div id="errorMessage" class="hidden bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg text-sm">
                     Invalid email or password. Please try again.
+                </div>
+
+                <!-- Success Message -->
+                <div id="successMessage" class="hidden bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg text-sm">
+                    Demo data seeded successfully!
                 </div>
             </form>
 
@@ -104,8 +117,11 @@
                 </a>
             </div>
         </div>
+    </div>
 
     <script>
+        const API_BASE = 'http://localhost:4000';
+
         function togglePassword() {
             const passwordInput = document.getElementById('password');
             const eyeIcon = document.getElementById('eyeIcon');
@@ -124,33 +140,76 @@
             }
         }
 
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        async function seedDemoData() {
+            try {
+                const response = await fetch(`${API_BASE}/dev/seed`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    document.getElementById('successMessage').classList.remove('hidden');
+                    setTimeout(() => {
+                        document.getElementById('successMessage').classList.add('hidden');
+                    }, 3000);
+                } else {
+                    throw new Error('Failed to seed data');
+                }
+            } catch (error) {
+                console.error('Seed error:', error);
+                showError('Failed to seed demo data. Make sure the server is running.');
+            }
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('hidden');
+            setTimeout(() => {
+                errorDiv.classList.add('hidden');
+            }, 5000);
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            const loadingMessage = document.getElementById('loadingMessage');
             const errorMessage = document.getElementById('errorMessage');
             
-            // Simple demo authentication
-            if (email === 'teacher@demo.com' && password === 'demo123') {
-                // Store login state
-                const teacherData = {
-                    name: 'Mr. Xyz',
-                    email: email,
-                    school: 'Government Primary School, Jaipur',
-                    employeeId: 'TCH2024001',
-                    subjects: ['Mathematics', 'Science'],
-                    classes: ['Class 5-A', 'Class 6-B']
-                };
+            // Show loading state
+            loadingMessage.classList.remove('hidden');
+            errorMessage.classList.add('hidden');
+            
+            try {
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
                 
-                // In a real app, this would use secure authentication
-                // For demo, we'll just redirect
-                window.location.href = 'attendance.html';
-            } else {
-                errorMessage.classList.remove('hidden');
-                setTimeout(() => {
-                    errorMessage.classList.add('hidden');
-                }, 3000);
+                if (response.ok) {
+                    // Store authentication data
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('teacherData', JSON.stringify(data.teacher));
+                    
+                    // Redirect to dashboard
+                    window.location.href = 'attendance.html';
+                } else {
+                    throw new Error(data.message || 'Login failed');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showError(error.message || 'Login failed. Please check if the server is running on localhost:4000');
+            } finally {
+                loadingMessage.classList.add('hidden');
             }
         });
     </script>
